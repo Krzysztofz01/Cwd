@@ -30,7 +30,7 @@ namespace Cwd
 
                 string currentDirectory = Directory.GetCurrentDirectory();
 
-                clipboardService.SetClipboardText(currentDirectory);
+                clipboardService.CopyToClipboard(currentDirectory);
 
                 if (printCurrentDirectory) Console.WriteLine($"{currentDirectory}{Environment.NewLine}");
 
@@ -49,7 +49,7 @@ namespace Cwd
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-
+                return new WindowsClipboardService();
             }
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
