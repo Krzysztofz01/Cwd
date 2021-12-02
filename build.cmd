@@ -14,7 +14,7 @@ REM Delete build directory
 RMDIR /s /q build
 
 REM Remove the source code directory
-RMDIR /s /q TKeyChain
+RMDIR /s /q Cwd
 
 REM Remove the .git hidden directory
 RMDIR /s /q .git
