@@ -1,6 +1,7 @@
 ﻿using Cwd.Abstraction;
 using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace Cwd
@@ -12,14 +13,26 @@ namespace Cwd
 
         static int Main(string[] args)
         {
+            bool printCurrentDirectory = false;
+
             try
             {
+                if (args.Any(a => a.Contains("-h") || a.Contains("--help")))
+                {
+                    Help.Print();
+
+                    return _success;
+                }
+
+                if (args.Any(a => a.Contains("-p") || a.Contains("--print"))) printCurrentDirectory = true;
 
                 var clipboardService = GetClipboardService();
 
                 string currentDirectory = Directory.GetCurrentDirectory();
 
                 clipboardService.SetClipboardText(currentDirectory);
+
+                if (printCurrentDirectory) Console.WriteLine($"{currentDirectory}{Environment.NewLine}");
 
                 Console.WriteLine("Current directory path copied to clipboard...");
 
