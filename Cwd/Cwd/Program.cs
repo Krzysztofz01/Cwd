@@ -17,14 +17,14 @@ namespace Cwd
 
             try
             {
-                if (args.Any(a => a.Contains("-h") || a.Contains("--help")))
+                if (args.Any(a => a.ToLower().Contains("-h") || a.ToLower().Contains("--help")))
                 {
                     Help.Print();
 
                     return _success;
                 }
 
-                if (args.Any(a => a.Contains("-p") || a.Contains("--print"))) printCurrentDirectory = true;
+                if (args.Any(a => a.ToLower().Contains("-p") || a.ToLower().Contains("--print"))) printCurrentDirectory = true;
 
                 var clipboardService = GetClipboardService();
 
@@ -32,7 +32,7 @@ namespace Cwd
 
                 clipboardService.CopyToClipboard(currentDirectory);
 
-                if (printCurrentDirectory) Console.WriteLine($"{currentDirectory}{Environment.NewLine}");
+                if (printCurrentDirectory) Console.WriteLine($"{Environment.NewLine}{currentDirectory}{Environment.NewLine}");
 
                 Console.WriteLine("Current directory path copied to clipboard...");
 
