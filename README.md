@@ -21,6 +21,8 @@ Run the program with ```-h (--help)``` to display all informations, available co
 
 You can run the program with ```-p (--print)``` to aditional print the current directory.
 
+You use ```-j (--jump)``` to wrap the current directory with ```cd``` and new line symbol to just paste the path to change the directory.
+
 ## Development
 
 Features that are not implemented, but that their implementation is planned:

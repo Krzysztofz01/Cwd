@@ -14,6 +14,7 @@ namespace Cwd
         static int Main(string[] args)
         {
             bool printCurrentDirectory = false;
+            bool addAdditionalEnterForJump = false;
 
             try
             {
@@ -25,10 +26,13 @@ namespace Cwd
                 }
 
                 if (args.Any(a => a.ToLower().Contains("-p") || a.ToLower().Contains("--print"))) printCurrentDirectory = true;
+                if (args.Any(a => a.ToLower().Contains("-j") || a.ToLower().Contains("--jump"))) addAdditionalEnterForJump = true;
 
                 var clipboardService = GetClipboardService();
 
                 string currentDirectory = Directory.GetCurrentDirectory();
+
+                if (addAdditionalEnterForJump) currentDirectory = $"cd {currentDirectory}{Environment.NewLine}";
 
                 clipboardService.CopyToClipboard(currentDirectory);
 

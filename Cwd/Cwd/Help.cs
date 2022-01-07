@@ -10,9 +10,9 @@ namespace Cwd
         {
             Console.WriteLine(_title);
 
-            Console.WriteLine($"cwd (Copy Working Directory) - Simple as that...{Environment.NewLine}Created by: Krzysztofz01");
+            Console.WriteLine($"cwd (Copy Working Directory) - Simple as that...{Environment.NewLine}Created by: Krzysztofz01{Environment.NewLine}https://github.com/Krzysztofz01/Cwd{Environment.NewLine}Version: 1.0.0");
 
-            Console.WriteLine($@"{Environment.NewLine}-h --help - Print informations and available commands.{Environment.NewLine}-p --print - Additionaly print the current directory.");
+            Console.WriteLine($@"{Environment.NewLine}-h --help - Print informations and available commands.{Environment.NewLine}-p --print - Additionaly print the current directory.{Environment.NewLine}-j --jump - The current path is between ,,cd'' and new line symbol.");
         }
     }
 }
