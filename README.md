@@ -10,8 +10,12 @@ Requirements:
 # Clone the repository
 git clone https://github.com/Krzysztofz01/TKeyChain.git
 
-# Run the install script
+# Run the install script (for Windows)
 ./build.cmd
+
+# Run the install script (for Linux)
+sudo chmod +x ./build.sh
+sudo sh build.sh
 
 # Remember to add the bin directory to the environment variables path
 ```
@@ -27,5 +31,4 @@ You use ```-j (--jump)``` to wrap the current directory with ```cd``` and new li
 
 Features that are not implemented, but that their implementation is planned:
 
-- Support for Linux systems.
 - Support for MacOS systems.

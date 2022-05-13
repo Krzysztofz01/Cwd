@@ -58,7 +58,7 @@ namespace Cwd
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                throw new NotImplementedException();
+                return new LinuxClipboardService();
             }
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
