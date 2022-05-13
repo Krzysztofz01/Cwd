@@ -8,8 +8,8 @@ namespace Cwd
 {
     class Program
     {
-        private static readonly int _success = 0;
-        private static readonly int _failure = 1;
+        private const int _success = 0;
+        private const int _failure = 1;
 
         static int Main(string[] args)
         {
