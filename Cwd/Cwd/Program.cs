@@ -1,7 +1,7 @@
 ﻿using Cwd.Abstraction;
+using Cwd.Extensions;
 using System;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace Cwd
@@ -13,28 +13,27 @@ namespace Cwd
 
         static int Main(string[] args)
         {
-            bool printCurrentDirectory = false;
-            bool addAdditionalEnterForJump = false;
-
             try
             {
-                if (args.Any(a => a.ToLower().Contains("-h") || a.ToLower().Contains("--help")))
+                if (args.HasParam("-h", "--help"))
                 {
                     Help.Print();
 
                     return _success;
                 }
 
-                if (args.Any(a => a.ToLower().Contains("-p") || a.ToLower().Contains("--print"))) printCurrentDirectory = true;
-                if (args.Any(a => a.ToLower().Contains("-j") || a.ToLower().Contains("--jump"))) addAdditionalEnterForJump = true;
+                var printCurrentDirectory = args.HasParam("-p", "--print");
+                var addAdditionalEnterForJump = args.HasParam("-j", "--jump");
 
                 var clipboardService = GetClipboardService();
 
                 string currentDirectory = Directory.GetCurrentDirectory();
 
-                if (addAdditionalEnterForJump) currentDirectory = $"cd {currentDirectory}{Environment.NewLine}";
+                string valueToCopy = addAdditionalEnterForJump
+                    ? $"cd {currentDirectory}{Environment.NewLine}"
+                    : currentDirectory;
 
-                clipboardService.CopyToClipboard(currentDirectory);
+                clipboardService.CopyToClipboard(valueToCopy);
 
                 if (printCurrentDirectory) Console.WriteLine($"{Environment.NewLine}{currentDirectory}{Environment.NewLine}");
 
@@ -63,7 +62,6 @@ namespace Cwd
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                throw new NotImplementedException();
             }
 
             throw new PlatformNotSupportedException("This operation system is not supported.");
