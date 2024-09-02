@@ -1,21 +1,21 @@
 # Cwd (Copy current directory)
 A simple program that adds functionality that, unfortunately, is not found in many terminals by default. Three letters are enough to quickly copy the current path, do not waste time on long commands or, even worse, taking your hands off the keyboard on the mouse.
 
-## Installation (*Windows*)
+## Installation
 Requirements:
 - **git** - Cloning the source code from Github.
+- **Taskfile** - Build automation runner.
 - **dotnet SDK** - Building the project from source code.
 
 ```
 # Clone the repository
-git clone https://github.com/Krzysztofz01/TKeyChain.git
+git clone https://github.com/Krzysztofz01/Cwd.git
 
 # Run the install script (for Windows)
-./build.cmd
+task build:windows
 
 # Run the install script (for Linux)
-sudo chmod +x ./build.sh
-sudo sh build.sh
+task build:linux
 
 # Remember to add the bin directory to the environment variables path
 ```

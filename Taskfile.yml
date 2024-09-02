@@ -1,0 +1,12 @@
+version: '3'
+
+tasks:
+  build:windows:
+    desc: Build the "cwd" program for Win32 AMD64 system
+    cmds:
+      - dotnet publish Cwd/Cwd/Cwd.csproj -v n --runtime win-x64 --output ./bin --self-contained true --configuration Release /p:IncludeNativeLibrariesForSelfExtract=true
+
+  build:linux:
+    desc: Build the "cwd" program for Linux AMD64 system
+    cmds:
+      - dotnet publish ./Cwd/Cwd/Cwd.csproj -v n --runtime linux-x64 --output ./bin --self-contained true --configuration Release /p:IncludeNativeLibrariesForSelfExtract=true
