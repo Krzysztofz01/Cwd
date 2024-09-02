@@ -4,54 +4,53 @@ using System;
 using System.Diagnostics;
 using System.IO;
 
-namespace Cwd
+namespace Cwd;
+
+public class LinuxClipboardService : IClipboardService
 {
-    public class LinuxClipboardService : IClipboardService
+    private const string _wslEnvVariableName = "WSL_DISTRO_NAME";
+
+    public void CopyToClipboard(string value)
     {
-        private const string _wslEnvVariableName = "WSL_DISTRO_NAME";
+        var isWsl = Environment.GetEnvironmentVariable(_wslEnvVariableName) is not null;
 
-        public void CopyToClipboard(string value)
+        var tempFilePath = Path.GetTempFileName();
+        File.WriteAllText(tempFilePath, value);
+
+        try
         {
-            var isWsl = Environment.GetEnvironmentVariable(_wslEnvVariableName) is not null;
+            var argument = (isWsl)
+                ? $"cat {tempFilePath} | clip.exe"
+                : $"cat {tempFilePath} | xsel -i --clipboard";
 
-            var tempFilePath = Path.GetTempFileName();
-            File.WriteAllText(tempFilePath, value);
-
-            try
+            using var process = new Process
             {
-                var argument = (isWsl)
-                    ? $"cat {tempFilePath} | clip.exe"
-                    : $"cat {tempFilePath} | xsel -i --clipboard";
-
-                using var process = new Process
+                StartInfo = new()
                 {
-                    StartInfo = new()
-                    {
-                        FileName = "bash",
-                        Arguments = argument,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = false,
-                    }
-                };
+                    FileName = "bash",
+                    Arguments = argument,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = false,
+                }
+            };
 
-                process.Start();
+            process.Start();
 
-                if (!process.DoubleWaitForExit()) throw new TimeoutException($"Process timed out for {argument}.");
+            if (!process.DoubleWaitForExit()) throw new TimeoutException($"Process timed out for {argument}.");
 
-                if (process.ExitCode == 0) return;
+            if (process.ExitCode == 0) return;
 
-                throw new InvalidOperationException($"Operation failed for {argument}");
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                File.Delete(tempFilePath);
-            }
+            throw new InvalidOperationException($"Operation failed for {argument}");
+        }
+        catch
+        {
+            throw;
+        }
+        finally
+        {
+            File.Delete(tempFilePath);
         }
     }
 }

@@ -1,7 +1,6 @@
-﻿namespace Cwd.Abstraction
+﻿namespace Cwd.Abstraction;
+
+internal interface IClipboardService
 {
-    internal interface IClipboardService
-    {
-        void CopyToClipboard(string value);
-    }
+    void CopyToClipboard(string value);
 }
